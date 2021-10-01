@@ -1,0 +1,19 @@
+/*=====================================
+       SECTION PARTIAL
+======================================*/
+
+section {
+  width: 100%;
+  padding: 10px;
+  background-color: #fff;
+  border: 1px solid #c0c0c0;
+  border-radius: 5px;
+}
+
+.employee-info p {
+  margin-bottom: 0;
+  & h2 {
+    margin-bottom: 0;
+  }
+}
+
