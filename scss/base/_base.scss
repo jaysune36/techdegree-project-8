@@ -8,9 +8,13 @@
 
 body {
   background-color: #fafafa;
+  font-family: 'Roboto', sans-serif;
 }
 
-main {
-  margin: 0 auto;
+#directory, h1 {
   width: 90vw;
+}
+
+#directory {
+  margin: 0 auto;
 }

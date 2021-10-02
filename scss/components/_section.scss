@@ -2,18 +2,29 @@
        SECTION PARTIAL
 ======================================*/
 
-section {
-  width: 100%;
-  padding: 10px;
+.employee-container {
+  padding: 1em;
   background-color: #fff;
-  border: 1px solid #c0c0c0;
+  border: 1px solid #d2d2d2;
   border-radius: 5px;
+  &:hover {
+    cursor: pointer;
+  }
 }
 
-.employee-info p {
-  margin-bottom: 0;
+.employee-info {
+  margin-left: 1rem;
+  width: auto;
+  & p, & h2{
+  margin: .2rem;
+  }
   & h2 {
-    margin-bottom: 0;
+    color: #4c4c4c;
+    font-size: 1.1em;
+  }
+  & p {
+    color: lighten(#737373, 30%);
+    font-size: .9em;
   }
 }
 

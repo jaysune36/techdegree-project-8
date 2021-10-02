@@ -352,11 +352,15 @@ template {
 
 body {
   background-color: #fafafa;
+  font-family: "Roboto", sans-serif;
 }
 
-main {
-  margin: 0 auto;
+#directory, h1 {
   width: 90vw;
+}
+
+#directory {
+  margin: 0 auto;
 }
 
 /*=====================================
@@ -366,7 +370,8 @@ main {
        IMG PARTIAL
 ======================================*/
 img {
-  width: 50%;
+  width: 100%;
+  min-width: 75px;
   max-width: 80px;
   border-radius: 50%;
 }
@@ -374,40 +379,71 @@ img {
 /*=====================================
        SECTION PARTIAL
 ======================================*/
-section {
-  width: 100%;
-  padding: 10px;
+.employee-container {
+  padding: 1em;
   background-color: #fff;
-  border: 1px solid #c0c0c0;
+  border: 1px solid #d2d2d2;
   border-radius: 5px;
 }
-
-.employee-info p {
-  margin-bottom: 0;
+.employee-container:hover {
+  cursor: pointer;
 }
-.employee-info p h2 {
-  margin-bottom: 0;
+
+.employee-info {
+  margin-left: 1rem;
+  width: auto;
+}
+.employee-info p, .employee-info h2 {
+  margin: 0.2rem;
+}
+.employee-info h2 {
+  color: #4c4c4c;
+  font-size: 1.1em;
+}
+.employee-info p {
+  color: silver;
+  font-size: 0.9em;
 }
 
 /*=====================================
        LAYOUT PARTIAL
 ======================================*/
 #directory {
+  max-width: 1000px;
   margin: 0 auto;
   display: grid;
-  max-width: 1000px;
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
   grid-auto-rows: minmax(150px, auto);
   grid-gap: 20px;
 }
 
-section {
+.employee-container,
+.employee-info {
   display: flex;
 }
 
-section {
+.employee-container {
   flex-direction: row;
   align-items: center;
+}
+
+.employee-info {
+  flex-direction: column;
+}
+
+h1 {
+  margin: 3em auto 1em;
+  color: #737373;
+  letter-spacing: 0.2rem;
+  font-size: 1rem;
+}
+
+/*=====================================
+       MODAL PARTIAL
+======================================*/
+.modal-background {
+  display: none;
+  opacity: 0.5;
 }
 
 /*# sourceMappingURL=styles.css.map */
