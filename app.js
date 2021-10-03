@@ -45,6 +45,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   function createModalInfo(employee) {
+    const employeeID = employee.employeeID
     const modalBox = modal.querySelector('.modal-box');
     const div = document.createElement('div');
     div.innerHTML = `
@@ -74,7 +75,8 @@ document.addEventListener('DOMContentLoaded', () => {
     if(e.target.tagName === 'SECTION'|| parent.tagName === 'SECTION' || parent.parentNode.tagName === 'SECTION'){
       console.log('hello world');
       modal.style.display = 'block';
-      createModalInfo(employeesInfo[0])
+      const employee = 
+      createModalInfo(employeesInfo)
     }
     if(e.target.className === 'close-modal') {
       modal.style.display = 'none';
