@@ -379,13 +379,13 @@ img {
 /*=====================================
        SECTION PARTIAL
 ======================================*/
-.employee-container {
+section {
   padding: 1em;
   background-color: #fff;
   border: 1px solid #d2d2d2;
   border-radius: 5px;
 }
-.employee-container:hover {
+section:hover {
   cursor: pointer;
 }
 
@@ -417,12 +417,12 @@ img {
   grid-gap: 20px;
 }
 
-.employee-container,
+section,
 .employee-info {
   display: flex;
 }
 
-.employee-container {
+section {
   flex-direction: row;
   align-items: center;
 }
@@ -441,9 +441,32 @@ h1 {
 /*=====================================
        MODAL PARTIAL
 ======================================*/
-.modal-background {
+.modal-container {
   display: none;
-  opacity: 0.5;
+  background-color: black;
+  background-color: rgba(0, 0, 0, 0.4);
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: 100%;
+  overflow: auto;
+}
+
+.modal-box {
+  width: 80%;
+  margin: 15% auto;
+  padding: 10px;
+  border: 1px solid #d2d2d2;
+  background-color: white;
+}
+
+.close-modal {
+  float: right;
+}
+.close-modal:hover {
+  cursor: pointer;
 }
 
 /*# sourceMappingURL=styles.css.map */
