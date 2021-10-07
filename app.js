@@ -2,13 +2,15 @@ document.addEventListener('DOMContentLoaded', () => {
   const employeeDir = document.getElementById('directory');
   const body = document.querySelector('body');
   const modal = document.getElementById('modal');
+  const sections = document.querySelectorAll('section');
   const employeesURL = 'https://randomuser.me/api/?format=JSON?page=3&results=12&seed=abc';
   const employeesInfo = [];
+  let employeeNumber = 0;
 
   function generateDir(data) {
-    data.results.map(person => {
+    data.map(person => {
       const section = document.createElement('section');
-      section.className = Math.floor(Math.random() * 100);
+      section.className = employeeNumber
         section.innerHTML = `
             <img src='${person.picture.thumbnail}'>
             <div class='employee-info'>
@@ -19,8 +21,6 @@ document.addEventListener('DOMContentLoaded', () => {
       employeeDir.appendChild(section);
 
       let employee = {
-        employeeID: {
-          number: section.className,
           info: {
             name: {
               first: `${person.name.first}`,
@@ -36,50 +36,59 @@ document.addEventListener('DOMContentLoaded', () => {
               postcode: person.location.postcode
             },
             birthdate: `${person.dob.date}`
-          }
       }
     }
       employeesInfo.push(employee)
+      employeeNumber++
     })
-    console.log(employeesInfo)
   }
 
   function createModalInfo(employee) {
-    const employeeID = employee.employeeID
     const modalBox = modal.querySelector('.modal-box');
     const div = document.createElement('div');
-    div.innerHTML = `
-    <img src='${employee.img}'>
-    <div class='employee-info'>
-      <h2>Name: ${employee.name.first} ${employee.name.last}</h2>
-      <p>Email: ${employee.email}</p>
-      <p>Cell: ${employee.cell}</p>
-      <p>Street Address: ${employee.address.street}</p>
-      <p>City: ${employee.address.city}</p>
-      <p>State: ${employee.address.state}</p>
-      <p>Zip Code: ${employee.address.postcode}</p>
-      <p>DOB: ${employee.birthdate}</p>
-    </div>
-    `;
-    modalBox.insertAdjacentElement('beforeend', div)
+    div.className = 'modal-employee-info'
+        div.innerHTML = `
+        <img src='${employee.info.img}'>
+        <div class='employee-info'>
+          <h2>Name: ${employee.info.name.first} ${employee.info.name.last}</h2>
+          <p>Email: ${employee.info.email}</p>
+          <p>Cell: ${employee.info.cell}</p>
+          <p>Street Address: ${employee.info.address.street}</p>
+          <p>City: ${employee.info.address.city}</p>
+          <p>State: ${employee.info.address.state}</p>
+          <p>Zip Code: ${employee.info.address.postcode}</p>
+          <p>DOB: ${employee.info.birthdate}</p>
+        </div>
+        `;
+        modalBox.insertAdjacentElement('beforeend', div);
   }
 
   fetch(employeesURL)
     .then(data => data.json())
+    .then(data => data.results)
     .then(generateDir)
     .catch(err => console.log(err))
 
-  body.addEventListener('click', (e) => {
-    console.log(e.target);
-    const parent = e.target.parentNode;
-    if(e.target.tagName === 'SECTION'|| parent.tagName === 'SECTION' || parent.parentNode.tagName === 'SECTION'){
-      console.log('hello world');
-      modal.style.display = 'block';
-      const employee = 
-      createModalInfo(employeesInfo)
-    }
-    if(e.target.className === 'close-modal') {
-      modal.style.display = 'none';
-    }
-  })
+
+    sections.forEach( section => {
+      section.addEventListener('click', (e) => {
+        console.log('hello world')
+      })
+    })
+
+  // body.addEventListener('click', (e) => {
+  //   console.log(e.currentTarget);
+  //   const parent = e.target.parentNode;
+  //   // if(e.target.tagName === 'SECTION'|| parent.tagName === 'SECTION' || parent.parentNode.tagName === 'SECTION'){
+  //     if(e.currentTarget === 'SECTION'){
+  //       e.currentTarget.stopPropagation()
+  //       console.log(e.currentTarget);
+  //     modal.style.display = 'block';
+  //     createModalInfo(employeesInfo[parent.className])
+  //   }
+  //   if(e.target.className === 'close-modal') {
+  //     modal.style.display = 'none';
+  //     e.target.nextElementSibling.remove()
+  //   }
+  // })
 })
