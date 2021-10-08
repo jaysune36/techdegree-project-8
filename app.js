@@ -2,7 +2,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const employeeDir = document.getElementById('directory');
   const body = document.querySelector('body');
   const modal = document.getElementById('modal');
-  const sections = document.querySelectorAll('section');
+  const search = document.getElementById('search');
   const employeesURL = 'https://randomuser.me/api/?format=JSON?page=3&results=12&seed=abc';
   const employeesInfo = [];
   let employeeNumber = 0;
@@ -10,7 +10,7 @@ document.addEventListener('DOMContentLoaded', () => {
   function generateDir(data) {
     data.map(person => {
       const section = document.createElement('section');
-      section.className = employeeNumber
+      section.className = employeeNumber;
         section.innerHTML = `
             <img src='${person.picture.thumbnail}'>
             <div class='employee-info'>
@@ -46,18 +46,18 @@ document.addEventListener('DOMContentLoaded', () => {
   function createModalInfo(employee) {
     const modalBox = modal.querySelector('.modal-box');
     const div = document.createElement('div');
+    let date = new Date(employee.info.birthdate)
     div.className = 'modal-employee-info'
         div.innerHTML = `
         <img src='${employee.info.img}'>
         <div class='employee-info'>
-          <h2>Name: ${employee.info.name.first} ${employee.info.name.last}</h2>
-          <p>Email: ${employee.info.email}</p>
-          <p>Cell: ${employee.info.cell}</p>
-          <p>Street Address: ${employee.info.address.street}</p>
-          <p>City: ${employee.info.address.city}</p>
-          <p>State: ${employee.info.address.state}</p>
-          <p>Zip Code: ${employee.info.address.postcode}</p>
-          <p>DOB: ${employee.info.birthdate}</p>
+          <h2>${employee.info.name.first} ${employee.info.name.last}</h2>
+          <p>${employee.info.email}</p>
+          <p>${employee.info.address.city}</p>
+          <hr />
+          <p>${employee.info.cell}</p>
+          <p>${employee.info.address.street}, ${employee.info.address.state} ${employee.info.address.postcode}</p>
+          <p>Birthday: ${date.getMonth()}/${date.getDate()}/${date.getFullYear()}</p>
         </div>
         `;
         modalBox.insertAdjacentElement('beforeend', div);
@@ -69,26 +69,33 @@ document.addEventListener('DOMContentLoaded', () => {
     .then(generateDir)
     .catch(err => console.log(err))
 
+    employeeDir.addEventListener('click', (e) => {
+    if(e.target !== employeeDir){
+      const section = e.target.closest('section');
+      if(section) {
+        modal.style.display = 'block';
+        createModalInfo(employeesInfo[section.className])
+      }
+    }
+  })
 
-    sections.forEach( section => {
-      section.addEventListener('click', (e) => {
-        console.log('hello world')
-      })
+    modal.addEventListener('click', (e) => {
+      if(e.target.className === 'close-modal') {
+        modal.style.display = 'none';
+        e.target.nextElementSibling.remove()
+      }
     })
 
-  // body.addEventListener('click', (e) => {
-  //   console.log(e.currentTarget);
-  //   const parent = e.target.parentNode;
-  //   // if(e.target.tagName === 'SECTION'|| parent.tagName === 'SECTION' || parent.parentNode.tagName === 'SECTION'){
-  //     if(e.currentTarget === 'SECTION'){
-  //       e.currentTarget.stopPropagation()
-  //       console.log(e.currentTarget);
-  //     modal.style.display = 'block';
-  //     createModalInfo(employeesInfo[parent.className])
-  //   }
-  //   if(e.target.className === 'close-modal') {
-  //     modal.style.display = 'none';
-  //     e.target.nextElementSibling.remove()
-  //   }
-  // })
+    search.addEventListener('keyup', () => {
+      let input = search.value.toLowerCase();
+      const employeesName = employeeDir.querySelectorAll('section');
+      for(let i=0; i<employeesName.length; i++) {
+        let employeeName = employeesName[i].querySelector('h2').textContent;
+        if(employeeName.toLowerCase().includes(input)) {
+          employeesName[i].style.display = 'block';
+        } else {
+          employeesName[i].style.display = 'none';
+        }
+      }
+    })
 })

@@ -9,18 +9,22 @@ section {
   border-radius: 5px;
   &:hover {
     cursor: pointer;
+    background-color: #d3d3d3;
+    border: 1px solid #000;
+    opacity: .5;
   }
 }
 
 .employee-info {
-  margin-left: 1rem;
-  width: auto;
+  width:100%;
+  padding-left: .5rem;
+  overflow: hidden;
   & p, & h2{
   margin: .2rem;
   }
   & h2 {
     color: #4c4c4c;
-    font-size: 1.1em;
+    font-size: 1em;
   }
   & p {
     color: lighten(#737373, 30%);

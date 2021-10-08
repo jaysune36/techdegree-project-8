@@ -11,9 +11,21 @@
   grid-gap: 20px;
 }
 
+.header-container,
 section,
 .employee-info {
   display: flex;
+}
+
+.header-container {
+  width: 90%;
+  margin: 3em auto 1em;
+  flex-direction: row;
+  justify-content: space-between;
+  & input {
+    width: 30%;
+    max-width: 100%;
+  }
 }
 
 section {
@@ -26,7 +38,6 @@ section {
 }
 
 h1 {
-  margin: 3em auto 1em;
   color: #737373;
   letter-spacing: .2rem;
   font-size: 1rem;
