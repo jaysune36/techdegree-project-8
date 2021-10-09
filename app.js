@@ -2,65 +2,65 @@ document.addEventListener('DOMContentLoaded', () => {
   const employeeDir = document.getElementById('directory');
   const body = document.querySelector('body');
   const modal = document.getElementById('modal');
+  const scroll = document.getElementById('scroll')
   const search = document.getElementById('search');
   const employeesURL = 'https://randomuser.me/api/?format=JSON?page=3&results=12&seed=abc';
   const employeesInfo = [];
-  let employeeNumber = 0;
 
   function generateDir(data) {
-    data.map(person => {
+    data.map((person, index) => {
       const section = document.createElement('section');
-      section.className = employeeNumber;
-        section.innerHTML = `
+      section.setAttribute('data-index', index)
+      section.innerHTML = `
+            <div class='card'>
             <img src='${person.picture.thumbnail}'>
             <div class='employee-info'>
               <h2>${person.name.first} ${person.name.last}</h2>
               <p>${person.email}</p>
               <p>${person.location.city}</p>
+            </div>
             </div>`;
       employeeDir.appendChild(section);
 
       let employee = {
-          info: {
-            name: {
-              first: `${person.name.first}`,
-              last: `${person.name.last}`
-            },
-            img: `${person.picture.large}`,
-            email: `${person.email}`,
-            cell: `${person.cell}`,
-            address: {
-              street: `${person.location.street.number} ${person.location.street.name}`,
-              city: `${person.location.city}`,
-              state: `${person.location.state}`,
-              postcode: person.location.postcode
-            },
-            birthdate: `${person.dob.date}`
+          name: {
+            first: `${person.name.first}`,
+            last: `${person.name.last}`
+          },
+          img: `${person.picture.large}`,
+          email: `${person.email}`,
+          cell: `${person.cell}`,
+          address: {
+            street: `${person.location.street.number} ${person.location.street.name}`,
+            city: `${person.location.city}`,
+            state: `${person.location.state}`,
+            postcode: person.location.postcode
+          },
+          birthdate: `${person.dob.date}`
       }
-    }
       employeesInfo.push(employee)
-      employeeNumber++
     })
   }
 
-  function createModalInfo(employee) {
+  function createModalInfo(employee, index) {
     const modalBox = modal.querySelector('.modal-box');
     const div = document.createElement('div');
-    let date = new Date(employee.info.birthdate)
-    div.className = 'modal-employee-info'
-        div.innerHTML = `
-        <img src='${employee.info.img}'>
+    let date = new Date(employee.birthdate)
+    div.className = 'modal-employee-info';
+    div.setAttribute('data-index', index);
+    div.innerHTML = `
+        <img src='${employee.img}'>
         <div class='employee-info'>
-          <h2>${employee.info.name.first} ${employee.info.name.last}</h2>
-          <p>${employee.info.email}</p>
-          <p>${employee.info.address.city}</p>
+          <h2>${employee.name.first} ${employee.name.last}</h2>
+          <p>${employee.email}</p>
+          <p>${employee.address.city}</p>
           <hr />
-          <p>${employee.info.cell}</p>
-          <p>${employee.info.address.street}, ${employee.info.address.state} ${employee.info.address.postcode}</p>
+          <p>${employee.cell}</p>
+          <p>${employee.address.street}, ${employee.address.state} ${employee.address.postcode}</p>
           <p>Birthday: ${date.getMonth()}/${date.getDate()}/${date.getFullYear()}</p>
         </div>
         `;
-        modalBox.insertAdjacentElement('beforeend', div);
+    modalBox.insertAdjacentElement('beforeend', div);
   }
 
   fetch(employeesURL)
@@ -69,33 +69,46 @@ document.addEventListener('DOMContentLoaded', () => {
     .then(generateDir)
     .catch(err => console.log(err))
 
-    employeeDir.addEventListener('click', (e) => {
-    if(e.target !== employeeDir){
+  employeeDir.addEventListener('click', (e) => {
+    if (e.target !== employeeDir) {
       const section = e.target.closest('section');
-      if(section) {
+      if (section) {
+        const modalInfo = document.querySelector('.modal-employee-info');
         modal.style.display = 'block';
-        createModalInfo(employeesInfo[section.className])
+        createModalInfo(employeesInfo[section.getAttribute('data-index')], section.getAttribute('data-index'));
       }
     }
   })
 
-    modal.addEventListener('click', (e) => {
-      if(e.target.className === 'close-modal') {
-        modal.style.display = 'none';
-        e.target.nextElementSibling.remove()
-      }
-    })
+  modal.addEventListener('click', (e) => {
+    const info = document.querySelector('.modal-employee-info');
+    let index = info.getAttribute('data-index');
+    if (e.target.className === 'close-modal') {
+      modal.style.display = 'none';
+      info.remove();
+    }
+    if (e.target.className === 'scroll-left') {
+      info.remove();
+      createModalInfo(employeesInfo[index - 1], index - 1)
+      console.log(index - 1)
+    }
+    if (e.target.className === 'scroll-right') {
+      info.remove();
+      createModalInfo(employeesInfo[index + 1],index + 1)
+      console.log(++index)
+    }
+  })
 
-    search.addEventListener('keyup', () => {
-      let input = search.value.toLowerCase();
-      const employeesName = employeeDir.querySelectorAll('section');
-      for(let i=0; i<employeesName.length; i++) {
-        let employeeName = employeesName[i].querySelector('h2').textContent;
-        if(employeeName.toLowerCase().includes(input)) {
-          employeesName[i].style.display = 'block';
-        } else {
-          employeesName[i].style.display = 'none';
-        }
+  search.addEventListener('keyup', () => {
+    let input = search.value.toLowerCase();
+    const employeesName = employeeDir.querySelectorAll('section');
+    for (let i = 0; i < employeesName.length; i++) {
+      let employeeName = employeesName[i].querySelector('h2').textContent;
+      if (employeeName.toLowerCase().includes(input)) {
+        employeesName[i].style.display = 'block';
+      } else {
+        employeesName[i].style.display = 'none';
       }
-    })
+    }
+  })
 })

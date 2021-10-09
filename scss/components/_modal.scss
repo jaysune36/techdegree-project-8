@@ -15,6 +15,28 @@
   overflow: auto;
 }
 
+.arrow-scroll {
+  position: absolute;
+  width: 100%;
+  margin: 25% auto;
+  padding: 2rem;
+  text-align: center;
+  font-size: 2em;
+  color: #fff;
+}
+
+.scroll-left,
+.scroll-right {
+  padding: 1rem;
+  border-radius: 5px;
+  background-color: #787878;
+  opacity: .7;
+  &:hover,
+  &:hover {
+    cursor: pointer;
+  }
+}
+
 .modal-box {
   width: 375px;
   position: relative;

@@ -12,7 +12,8 @@
 }
 
 .header-container,
-section,
+.arrow-scroll,
+.card,
 .employee-info {
   display: flex;
 }
@@ -28,7 +29,11 @@ section,
   }
 }
 
-section {
+.arrow-scroll {
+  justify-content: space-around;
+}
+
+.card {
   flex-direction: row;
   align-items: center;
 }
@@ -39,6 +44,18 @@ section {
 
 h1 {
   color: #737373;
-  letter-spacing: .2rem;
+  letter-spacing: .1rem;
   font-size: 1rem;
+}
+
+.search {
+  border-radius: 5px;
+  border: 1px solid #d2d2d2;
+  &::placeholder {
+    opacity: .5;
+  }
+}
+
+input:focus {
+  border-color: red;
 }
