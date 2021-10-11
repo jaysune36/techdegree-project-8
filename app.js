@@ -2,7 +2,6 @@ document.addEventListener('DOMContentLoaded', () => {
   const employeeDir = document.getElementById('directory');
   const body = document.querySelector('body');
   const modal = document.getElementById('modal');
-  const scroll = document.getElementById('scroll')
   const search = document.getElementById('search');
   const employeesURL = 'https://randomuser.me/api/?format=JSON?page=3&results=12&seed=abc';
   const employeesInfo = [];
@@ -83,19 +82,26 @@ document.addEventListener('DOMContentLoaded', () => {
   modal.addEventListener('click', (e) => {
     const info = document.querySelector('.modal-employee-info');
     let index = info.getAttribute('data-index');
+    const sections = document.querySelectorAll('section');
     if (e.target.className === 'close-modal') {
       modal.style.display = 'none';
       info.remove();
     }
     if (e.target.className === 'scroll-left') {
-      info.remove();
-      createModalInfo(employeesInfo[index - 1], index - 1)
-      console.log(index - 1)
+      if(index > 0) {
+        info.remove();
+        createModalInfo(employeesInfo[parseFloat(index) - 1], parseFloat(index) - 1);
+      } else {
+        return null;
+      }
     }
     if (e.target.className === 'scroll-right') {
-      info.remove();
-      createModalInfo(employeesInfo[index + 1],index + 1)
-      console.log(++index)
+      if(index < (sections.length - 1)) {
+        info.remove();
+        createModalInfo(employeesInfo[parseFloat(index) + 1],parseFloat(index) + 1);
+      } else {
+        return null;
+      }
     }
   })
 
@@ -111,4 +117,6 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     }
   })
+
+
 })
