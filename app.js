@@ -1,6 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
   const employeeDir = document.getElementById('directory');
-  const body = document.querySelector('body');
   const modal = document.getElementById('modal');
   const search = document.getElementById('search');
   const employeesURL = 'https://randomuser.me/api/?format=JSON?page=3&results=12&seed=abc';
@@ -44,7 +43,10 @@ document.addEventListener('DOMContentLoaded', () => {
   function createModalInfo(employee, index) {
     const modalBox = modal.querySelector('.modal-box');
     const div = document.createElement('div');
-    let date = new Date(employee.birthdate)
+    let date = new Date(employee.birthdate);
+    const reg = new RegExp(/[-()\s]/gm);
+    const numberReg = employee.cell.replace(reg, '');
+    const numberFormat = `(${numberReg[0]}${numberReg[1]}${numberReg[2]}) ${numberReg[3]}${numberReg[4]}${numberReg[5]}-${numberReg[6]}${numberReg[7]}${numberReg[8] = 0}${numberReg[9] = 0}`
     div.className = 'modal-employee-info';
     div.setAttribute('data-index', index);
     div.innerHTML = `
@@ -54,7 +56,7 @@ document.addEventListener('DOMContentLoaded', () => {
           <p>${employee.email}</p>
           <p>${employee.address.city}</p>
           <hr />
-          <p>${employee.cell}</p>
+          <p>${numberFormat}</p>
           <p>${employee.address.street}, ${employee.address.state} ${employee.address.postcode}</p>
           <p>Birthday: ${date.getMonth()}/${date.getDate()}/${date.getFullYear()}</p>
         </div>
@@ -72,7 +74,6 @@ document.addEventListener('DOMContentLoaded', () => {
     if (e.target !== employeeDir) {
       const section = e.target.closest('section');
       if (section) {
-        const modalInfo = document.querySelector('.modal-employee-info');
         modal.style.display = 'block';
         createModalInfo(employeesInfo[section.getAttribute('data-index')], section.getAttribute('data-index'));
       }
