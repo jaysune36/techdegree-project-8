@@ -8,7 +8,7 @@ document.addEventListener('DOMContentLoaded', () => {
   function generateDir(data) {
     data.map((person, index) => {
       const section = document.createElement('section');
-      section.setAttribute('data-index', index)
+      section.setAttribute('data-index', index);
       section.innerHTML = `
             <div class='card'>
             <img src='${person.picture.thumbnail}'>
@@ -35,9 +35,9 @@ document.addEventListener('DOMContentLoaded', () => {
             postcode: person.location.postcode
           },
           birthdate: `${person.dob.date}`
-      }
-      employeesInfo.push(employee)
-    })
+      };
+      employeesInfo.push(employee);
+    });
   }
 
   function createModalInfo(employee, index) {
@@ -46,7 +46,7 @@ document.addEventListener('DOMContentLoaded', () => {
     let date = new Date(employee.birthdate);
     const reg = new RegExp(/[-()\s]/gm);
     const numberReg = employee.cell.replace(reg, '');
-    const numberFormat = `(${numberReg[0]}${numberReg[1]}${numberReg[2]}) ${numberReg[3]}${numberReg[4]}${numberReg[5]}-${numberReg[6]}${numberReg[7]}${numberReg[8] = 0}${numberReg[9] = 0}`
+    const numberFormat = `(${numberReg[0]}${numberReg[1]}${numberReg[2]}) ${numberReg[3]}${numberReg[4]}${numberReg[5]}-${numberReg[6]}${numberReg[7]}${numberReg[8] = 0}${numberReg[9] = 0}`;
     div.className = 'modal-employee-info';
     div.setAttribute('data-index', index);
     div.innerHTML = `
@@ -68,7 +68,7 @@ document.addEventListener('DOMContentLoaded', () => {
     .then(data => data.json())
     .then(data => data.results)
     .then(generateDir)
-    .catch(err => console.log(err))
+    .catch(err => console.log(err));
 
   employeeDir.addEventListener('click', (e) => {
     if (e.target !== employeeDir) {
@@ -78,7 +78,7 @@ document.addEventListener('DOMContentLoaded', () => {
         createModalInfo(employeesInfo[section.getAttribute('data-index')], section.getAttribute('data-index'));
       }
     }
-  })
+  });
 
   modal.addEventListener('click', (e) => {
     const info = document.querySelector('.modal-employee-info');
@@ -104,7 +104,7 @@ document.addEventListener('DOMContentLoaded', () => {
         return null;
       }
     }
-  })
+  });
 
   search.addEventListener('keyup', () => {
     let input = search.value.toLowerCase();
@@ -117,7 +117,7 @@ document.addEventListener('DOMContentLoaded', () => {
         employeesName[i].style.display = 'none';
       }
     }
-  })
+  });
 
 
-})
+});
